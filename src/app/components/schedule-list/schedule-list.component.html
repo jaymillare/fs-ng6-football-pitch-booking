@@ -1,0 +1,68 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-xs-12 col-md-12 col-lg-4 pb-4">
+      <h4>View Daily Schedules</h4>
+      <ngb-datepicker #dp [(ngModel)]="ngbdpDate" (navigate)="date = $event.next" [minDate]="ngbdpMinDate" (ngModelChange)="dateChanged($event)"></ngb-datepicker>
+    </div>
+
+    <div class="col-xs-12 col-md-12 col-lg-8">
+      <div>
+        <h4>Your Football Pitch Bookings</h4>
+        <ng-container *ngIf="filteredByUserAndDateObj?.length > 0; else noPersonalSched">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let sched of filteredByUserAndDateObj">
+              <tr>
+                <td>{{sched.firstName}} {{sched.lastName}}</td>
+                <td>{{sched.date | date}}</td>
+                <td>{{sched.time}}</td>
+                <td>{{sched.status}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #noPersonalSched>
+          <h6>No reservations to display.</h6>
+        </ng-template>
+      </div>
+      <hr>
+      <div>
+        <h4>All Football Pitch Bookings</h4>
+        <ng-container *ngIf="filteredByDateObj?.length > 0; else noSched">
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Date</th>
+                <th scope="col">Time</th>
+                <th scope="col">Status</th>
+                <th scope="col">Notes</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let sched of filteredByDateObj">
+              <tr class="tr-{{sched.status}}">
+                <td>{{sched.firstName}} {{sched.lastName}}</td>
+                <td>{{sched.date | date}}</td>
+                <td>{{sched.time}}</td>
+                <td>{{sched.status}}</td>
+                <td>{{sched.comments}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </ng-container>
+        <ng-template #noSched>
+          <h6>No reservations to display.</h6>
+        </ng-template>
+      </div>
+    </div>
+
+  </div>
+</div>
